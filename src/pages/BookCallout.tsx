@@ -1,15 +1,48 @@
 import { useState } from 'react';
 import { Phone } from 'lucide-react';
 import FormField from '../components/FormField';
+import { sendCalloutRequest } from '../api/callout';
 
 export default function BookCallout() {
-  const [submitted, setSubmitted] = useState(false);
+  const [fullName, setFullName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [urgency, setUrgency] = useState('Immediate (Emergency)');
+  const [propertyAddress, setPropertyAddress] = useState('');
+  const [issueDescription, setIssueDescription] = useState('');
+  const [preferredContactMethod, setPreferredContactMethod] = useState('Phone Call');
+  const [preferredVisitTime, setPreferredVisitTime] = useState('');
   const [agree, setAgree] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!agree) return;
-    setSubmitted(true);
+    if (!agree || submitting) return;
+
+    setSubmitting(true);
+    setError(null);
+
+    try {
+      await sendCalloutRequest({
+        fullName,
+        phone,
+        email,
+        urgency,
+        propertyAddress,
+        issueDescription,
+        preferredContactMethod,
+        preferredVisitTime: preferredVisitTime || undefined,
+      });
+      setSubmitted(true);
+    } catch (err) {
+      console.error(err);
+      setError('Could not book your callout. Is the backend running?');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -45,6 +78,8 @@ export default function BookCallout() {
                       type="text"
                       placeholder="Your name"
                       className="input-field"
+                      value={fullName}
+                      onChange={e => setFullName(e.target.value)}
                     />
                   </FormField>
                   <FormField label="Phone Number" required>
@@ -53,6 +88,8 @@ export default function BookCallout() {
                       type="tel"
                       placeholder="+27 82 000 0000"
                       className="input-field"
+                      value={phone}
+                      onChange={e => setPhone(e.target.value)}
                     />
                   </FormField>
                 </div>
@@ -64,10 +101,16 @@ export default function BookCallout() {
                       type="email"
                       placeholder="your@email.com"
                       className="input-field"
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
                     />
                   </FormField>
                   <FormField label="Urgency">
-                    <select className="input-field" defaultValue="Immediate (Emergency)">
+                    <select
+                      className="input-field"
+                      value={urgency}
+                      onChange={e => setUrgency(e.target.value)}
+                    >
                       <option>Immediate (Emergency)</option>
                       <option>Today</option>
                       <option>Within a Week</option>
@@ -82,6 +125,8 @@ export default function BookCallout() {
                     type="text"
                     placeholder="Full address including postcode"
                     className="input-field"
+                    value={propertyAddress}
+                    onChange={e => setPropertyAddress(e.target.value)}
                   />
                 </FormField>
 
@@ -91,19 +136,30 @@ export default function BookCallout() {
                     rows={4}
                     placeholder="e.g. Unit not cooling, making a loud noise, not switching on..."
                     className="input-field"
+                    value={issueDescription}
+                    onChange={e => setIssueDescription(e.target.value)}
                   />
                 </FormField>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FormField label="Preferred Contact Method">
-                    <select className="input-field" defaultValue="Phone Call">
+                    <select
+                      className="input-field"
+                      value={preferredContactMethod}
+                      onChange={e => setPreferredContactMethod(e.target.value)}
+                    >
                       <option>Phone Call</option>
                       <option>Email</option>
                       <option>WhatsApp</option>
                     </select>
                   </FormField>
                   <FormField label="Preferred Visit Time (optional)">
-                    <input type="datetime-local" className="input-field" />
+                    <input
+                      type="datetime-local"
+                      className="input-field"
+                      value={preferredVisitTime}
+                      onChange={e => setPreferredVisitTime(e.target.value)}
+                    />
                   </FormField>
                 </div>
 
@@ -118,8 +174,14 @@ export default function BookCallout() {
                   <span>I agree to being contacted regarding this callout request.</span>
                 </label>
 
-                <button type="submit" className="btn-primary w-full">
-                  Book Callout
+                {error && <div className="text-brand-red text-sm">{error}</div>}
+
+                <button
+                  type="submit"
+                  className="btn-primary w-full disabled:opacity-60"
+                  disabled={submitting}
+                >
+                  {submitting ? 'Booking…' : 'Book Callout'}
                 </button>
               </form>
             )}

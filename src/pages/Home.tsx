@@ -1,10 +1,25 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { ArrowRight, Phone, ShieldCheck, BadgeCheck, Calculator } from 'lucide-react';
-import { services } from '../data/services';
-import { products } from '../data/products';
+import { fetchServices, type ServiceItem } from '../api/services';
+import { fetchProducts } from '../api/products';
+import type { Product } from '../data/products';
+import { getIcon } from '../lib/iconMap';
 import { formatZAR, formatBTU } from '../lib/format';
 
 export default function Home() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [services, setServices] = useState<ServiceItem[]>([]);
+
+  useEffect(() => {
+    fetchProducts()
+      .then(setProducts)
+      .catch(err => console.error('Failed to fetch products:', err));
+    fetchServices()
+      .then(setServices)
+      .catch(err => console.error('Failed to fetch services:', err));
+  }, []);
+
   const featured = products.slice(0, 3);
 
   return (
@@ -62,18 +77,21 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map(s => (
-              <div key={s.id} className="card p-6">
-                <div className="bg-brand-red w-10 h-10 rounded flex items-center justify-center text-white mb-4">
-                  <s.icon size={20} />
+            {services.map(s => {
+              const Icon = getIcon(s.iconName);
+              return (
+                <div key={s.id} className="card p-6">
+                  <div className="bg-brand-red w-10 h-10 rounded flex items-center justify-center text-white mb-4">
+                    <Icon size={20} />
+                  </div>
+                  <h3 className="font-bold text-lg mb-2">{s.title}</h3>
+                  <p className="text-sm text-gray-600 mb-4">{s.description}</p>
+                  <Link to="/quote" className="text-brand-red text-sm font-semibold hover:underline">
+                    Request Quote →
+                  </Link>
                 </div>
-                <h3 className="font-bold text-lg mb-2">{s.title}</h3>
-                <p className="text-sm text-gray-600 mb-4">{s.description}</p>
-                <Link to="/quote" className="text-brand-red text-sm font-semibold hover:underline">
-                  Request Quote →
-                </Link>
-              </div>
-            ))}
+              );
+            })}
           </div>
           <div className="text-center mt-12">
             <Link to="/services" className="btn-secondary inline-flex">View All Services</Link>

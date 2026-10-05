@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Plus, X } from 'lucide-react';
 import FormField from '../components/FormField';
+import { sendQuoteRequest } from '../api/quote';
 
 interface Room {
   id: number;
@@ -10,11 +11,23 @@ interface Room {
 }
 
 export default function RequestQuote() {
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [preferredContactMethod, setPreferredContactMethod] = useState('Email');
+  const [urgencyLevel, setUrgencyLevel] = useState('Planning Stage');
+  const [serviceType, setServiceType] = useState('New Install');
+  const [preferredDate, setPreferredDate] = useState('');
+  const [additionalInformation, setAdditionalInformation] = useState('');
+
   const [rooms, setRooms] = useState<Room[]>([
     { id: 1, size: '', type: 'Bedroom', notes: '' },
   ]);
-  const [submitted, setSubmitted] = useState(false);
   const [agree, setAgree] = useState(false);
+
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const addRoom = () => {
     setRooms(prev => [...prev, { id: Date.now(), size: '', type: 'Bedroom', notes: '' }]);
@@ -28,10 +41,36 @@ export default function RequestQuote() {
     setRooms(prev => prev.map(r => (r.id === id ? { ...r, ...patch } : r)));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!agree) return;
-    setSubmitted(true);
+    if (!agree || submitting) return;
+
+    setSubmitting(true);
+    setError(null);
+
+    try {
+      await sendQuoteRequest({
+        fullName,
+        email,
+        phone,
+        preferredContactMethod,
+        urgencyLevel,
+        serviceType,
+        preferredDate,
+        additionalInformation,
+        rooms: rooms.map(r => ({
+          size: r.size,
+          type: r.type,
+          notes: r.notes,
+        })),
+      });
+      setSubmitted(true);
+    } catch (err) {
+      console.error(err);
+      setError('Could not submit your quote request. Is the backend running?');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -68,6 +107,8 @@ export default function RequestQuote() {
                           type="text"
                           placeholder="Your full name"
                           className="input-field"
+                          value={fullName}
+                          onChange={e => setFullName(e.target.value)}
                         />
                       </FormField>
                       <FormField label="Email Address" required>
@@ -76,6 +117,8 @@ export default function RequestQuote() {
                           type="email"
                           placeholder="your@email.com"
                           className="input-field"
+                          value={email}
+                          onChange={e => setEmail(e.target.value)}
                         />
                       </FormField>
                     </div>
@@ -86,10 +129,16 @@ export default function RequestQuote() {
                           type="tel"
                           placeholder="+27 82 000 0000"
                           className="input-field"
+                          value={phone}
+                          onChange={e => setPhone(e.target.value)}
                         />
                       </FormField>
                       <FormField label="Preferred Contact Method">
-                        <select className="input-field" defaultValue="Email">
+                        <select
+                          className="input-field"
+                          value={preferredContactMethod}
+                          onChange={e => setPreferredContactMethod(e.target.value)}
+                        >
                           <option>Email</option>
                           <option>Phone Call</option>
                           <option>WhatsApp</option>
@@ -98,7 +147,11 @@ export default function RequestQuote() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <FormField label="Urgency Level">
-                        <select className="input-field" defaultValue="Planning Stage">
+                        <select
+                          className="input-field"
+                          value={urgencyLevel}
+                          onChange={e => setUrgencyLevel(e.target.value)}
+                        >
                           <option>Planning Stage</option>
                           <option>Immediate</option>
                           <option>Within a Week</option>
@@ -106,7 +159,11 @@ export default function RequestQuote() {
                         </select>
                       </FormField>
                       <FormField label="Service Type">
-                        <select className="input-field" defaultValue="New Install">
+                        <select
+                          className="input-field"
+                          value={serviceType}
+                          onChange={e => setServiceType(e.target.value)}
+                        >
                           <option>New Install</option>
                           <option>Repair</option>
                           <option>Maintenance</option>
@@ -192,13 +249,20 @@ export default function RequestQuote() {
                 {/* SECTION 3 */}
                 <div className="space-y-4">
                   <FormField label="Preferred Date (optional)">
-                    <input type="date" className="input-field" />
+                    <input
+                      type="date"
+                      className="input-field"
+                      value={preferredDate}
+                      onChange={e => setPreferredDate(e.target.value)}
+                    />
                   </FormField>
                   <FormField label="Additional Information">
                     <textarea
                       rows={4}
                       placeholder="Property details, access notes, existing units, anything else..."
                       className="input-field"
+                      value={additionalInformation}
+                      onChange={e => setAdditionalInformation(e.target.value)}
                     />
                   </FormField>
                 </div>
@@ -214,8 +278,14 @@ export default function RequestQuote() {
                   <span>I agree to being contacted regarding my inquiry.</span>
                 </label>
 
-                <button type="submit" className="btn-primary w-full">
-                  Submit Quote Request
+                {error && <div className="text-brand-red text-sm">{error}</div>}
+
+                <button
+                  type="submit"
+                  className="btn-primary w-full disabled:opacity-60"
+                  disabled={submitting}
+                >
+                  {submitting ? 'Submitting…' : 'Submit Quote Request'}
                 </button>
               </form>
             )}

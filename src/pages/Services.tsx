@@ -1,8 +1,24 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Phone, CheckCircle } from 'lucide-react';
-import { services } from '../data/services';
+import { fetchServices, type ServiceItem } from '../api/services';
+import { getIcon } from '../lib/iconMap';
 
 export default function Services() {
+  const [services, setServices] = useState<ServiceItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchServices()
+      .then(setServices)
+      .catch(err => {
+        console.error('Failed to fetch services:', err);
+        setError('Could not load services. Is the backend running?');
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <>
       {/* HERO */}
@@ -18,32 +34,50 @@ export default function Services() {
       {/* SERVICE CARDS */}
       <section className="section-padding bg-gray-50">
         <div className="container-narrow">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {services.map(s => (
-              <div key={s.id} className="bg-white rounded-lg shadow-sm overflow-hidden">
-                <div className="bg-brand-navy text-white px-6 py-4 flex items-center gap-3">
-                  <div className="bg-brand-red p-2 rounded">
-                    <s.icon size={20} />
+          {loading && (
+            <div className="text-center py-16 text-gray-500">
+              Loading services from API…
+            </div>
+          )}
+
+          {error && (
+            <div className="text-center py-16 text-brand-red">{error}</div>
+          )}
+
+          {!loading && !error && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {services.map(s => {
+                const Icon = getIcon(s.iconName);
+                return (
+                  <div key={s.id} className="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div className="bg-brand-navy text-white px-6 py-4 flex items-center gap-3">
+                      <div className="bg-brand-red p-2 rounded">
+                        <Icon size={20} />
+                      </div>
+                      <h3 className="font-bold text-lg">{s.title}</h3>
+                    </div>
+                    <div className="p-6">
+                      <p className="text-gray-600 mb-5">{s.description}</p>
+                      <ul className="space-y-2 mb-6">
+                        {s.bullets.map(b => (
+                          <li key={b} className="flex items-start gap-2 text-sm text-gray-700">
+                            <CheckCircle size={16} className="text-brand-red shrink-0 mt-0.5" />
+                            <span>{b}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <Link
+                        to="/quote"
+                        className="btn-secondary w-full block text-center text-sm"
+                      >
+                        Request Quote for This Service
+                      </Link>
+                    </div>
                   </div>
-                  <h3 className="font-bold text-lg">{s.title}</h3>
-                </div>
-                <div className="p-6">
-                  <p className="text-gray-600 mb-5">{s.description}</p>
-                  <ul className="space-y-2 mb-6">
-                    {s.bullets.map(b => (
-                      <li key={b} className="flex items-start gap-2 text-sm text-gray-700">
-                        <CheckCircle size={16} className="text-brand-red shrink-0 mt-0.5" />
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Link to="/quote" className="btn-secondary w-full block text-center text-sm">
-                    Request Quote for This Service
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 

@@ -1,15 +1,42 @@
 import { useState } from 'react';
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 import FormField from '../components/FormField';
+import { sendContactMessage } from '../api/contact';
 
 export default function Contact() {
-  const [submitted, setSubmitted] = useState(false);
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
   const [agree, setAgree] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!agree) return;
-    setSubmitted(true);
+    if (!agree || submitting) return;
+
+    setSubmitting(true);
+    setError(null);
+
+    try {
+      await sendContactMessage({
+        fullName,
+        email,
+        phone,
+        subject,
+        message,
+      });
+      setSubmitted(true);
+    } catch (err) {
+      console.error(err);
+      setError('Could not send your message. Is the backend running?');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -103,6 +130,8 @@ export default function Contact() {
                       type="text"
                       placeholder="John Smith"
                       className="input-field"
+                      value={fullName}
+                      onChange={e => setFullName(e.target.value)}
                     />
                   </FormField>
                   <FormField label="Email Address" required>
@@ -111,6 +140,8 @@ export default function Contact() {
                       type="email"
                       placeholder="john@example.com"
                       className="input-field"
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
                     />
                   </FormField>
                 </div>
@@ -122,6 +153,8 @@ export default function Contact() {
                       type="tel"
                       placeholder="+27 82 000 0000"
                       className="input-field"
+                      value={phone}
+                      onChange={e => setPhone(e.target.value)}
                     />
                   </FormField>
                   <FormField label="Subject" required>
@@ -130,6 +163,8 @@ export default function Contact() {
                       type="text"
                       placeholder="How can we help?"
                       className="input-field"
+                      value={subject}
+                      onChange={e => setSubject(e.target.value)}
                     />
                   </FormField>
                 </div>
@@ -140,6 +175,8 @@ export default function Contact() {
                     rows={5}
                     placeholder="Tell us about your enquiry..."
                     className="input-field"
+                    value={message}
+                    onChange={e => setMessage(e.target.value)}
                   />
                 </FormField>
 
@@ -157,8 +194,16 @@ export default function Contact() {
                   </span>
                 </label>
 
-                <button type="submit" className="btn-secondary w-full">
-                  Send Message
+                {error && (
+                  <div className="text-brand-red text-sm">{error}</div>
+                )}
+
+                <button
+                  type="submit"
+                  className="btn-secondary w-full disabled:opacity-60"
+                  disabled={submitting}
+                >
+                  {submitting ? 'Sending…' : 'Send Message'}
                 </button>
               </form>
             )}

@@ -6,15 +6,22 @@ import { formatZAR, formatBTU } from '../lib/format';
 export default function ProductCard({ product }: { product: Product }) {
   return (
     <div className="card flex flex-col">
-      <img
-        src={product.image}
-        alt={product.name}
-        loading="lazy"
-        className="w-full h-52 object-cover bg-gray-100"
-      />
+      {/* Clickable image */}
+      <Link to={`/products/${product.id}`}>
+        <img
+          src={product.image}
+          alt={product.name}
+          loading="lazy"
+          className="w-full h-52 object-cover bg-gray-100 hover:opacity-95 transition-opacity"
+        />
+      </Link>
+
       <div className="p-5 flex flex-col flex-1">
         <div className="flex items-start justify-between gap-3 mb-1">
-          <h3 className="font-bold leading-tight">{product.name}</h3>
+          {/* Clickable title */}
+          <Link to={`/products/${product.id}`} className="hover:underline">
+            <h3 className="font-bold leading-tight">{product.name}</h3>
+          </Link>
           <span className="text-brand-red font-bold whitespace-nowrap">
             {formatZAR(product.price)}
           </span>

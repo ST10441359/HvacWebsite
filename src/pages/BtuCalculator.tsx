@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Calculator, RotateCcw } from 'lucide-react';
 import {
@@ -7,17 +7,25 @@ import {
   type RoomType,
   type BtuResult,
 } from '../lib/btu';
-import { products } from '../data/products';
+import { fetchProducts } from '../api/products';
+import type { Product } from '../data/products';
 import { formatZAR, formatBTU } from '../lib/format';
 
 const ROOM_TYPES: RoomType[] = ['Bedroom', 'Living Room', 'Kitchen', 'Office'];
 
 export default function BtuCalculator() {
+  const [products, setProducts] = useState<Product[]>([]);
   const [roomSize, setRoomSize] = useState<string>('25');
   const [occupants, setOccupants] = useState<number>(2);
   const [roomType, setRoomType] = useState<RoomType>('Bedroom');
   const [result, setResult] = useState<BtuResult | null>(null);
   const [matchedIndices, setMatchedIndices] = useState<number[]>([]);
+
+  useEffect(() => {
+    fetchProducts()
+      .then(setProducts)
+      .catch(err => console.error('Failed to fetch products:', err));
+  }, []);
 
   const handleCalculate = () => {
     const size = parseFloat(roomSize);
