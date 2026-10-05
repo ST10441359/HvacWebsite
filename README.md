@@ -2,7 +2,20 @@
 
 The customer-facing website for Advanced Air Conditioning. Built in React with Vite and Tailwind CSS, fully responsive, and designed around one goal: turning visitors into customers.
 
+# Group members
+
+- ST10439133 - Camryn Naidoo
+- ST10441399 - Suvan Samlall
+- ST10451026 - Calib Frank
+- ST10446908 - Caleb Ragaven
+- ST10296234 - Joshua Chetty
+- ST10451537 - Keshvir Parthab
+
+## Suvan Samlall (ST10441399) is submitting our Task 2 WIL assignment on behalf of Camryn Naidoo (ST10439133) who is away and is unable to subm
+
 **YouTube Link:** https://youtu.be/F-LGkjkRH50?si=sQnNFOn_BNQi437l 
+
+**Website API Link:** https://github.com/ST10441359/AdvancedAirAPI.git - you can find the website api readme in this link
 
 ---
 
