@@ -1,44 +1,6 @@
-import { useState } from 'react';
-import { Phone, Mail, MapPin, Clock } from 'lucide-react';
-import FormField from '../components/FormField';
-import { sendContactMessage } from '../api/contact';
+import { Phone, Mail, MapPin, Clock, Smartphone, Printer, Globe } from 'lucide-react';
 
 export default function Contact() {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [subject, setSubject] = useState('');
-  const [message, setMessage] = useState('');
-  const [agree, setAgree] = useState(false);
-
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!agree || submitting) return;
-
-    setSubmitting(true);
-    setError(null);
-
-    try {
-      await sendContactMessage({
-        fullName,
-        email,
-        phone,
-        subject,
-        message,
-      });
-      setSubmitted(true);
-    } catch (err) {
-      console.error(err);
-      setError('Could not send your message. Is the backend running?');
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
   return (
     <>
       {/* HERO */}
@@ -46,168 +8,124 @@ export default function Contact() {
         <div className="container-narrow px-4">
           <h1 className="font-display text-5xl md:text-6xl mb-3">CONTACT US</h1>
           <p className="text-gray-300">
-            We respond to all inquiries within 2 hours during business hours.
+            We're here to help with all your air conditioning needs.
           </p>
         </div>
       </section>
 
       <section className="section-padding bg-gray-50">
-        <div className="container-narrow grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left: contact info */}
+        <div className="container-narrow grid grid-cols-1 lg:grid-cols-2 gap-12">
+          
+          {/* Left Column: Contact Details */}
           <div>
-            <h2 className="font-display text-2xl mb-6">GET IN TOUCH</h2>
+            <h2 className="font-display text-3xl mb-8">GET IN TOUCH</h2>
 
-            <div className="space-y-4 mb-8">
-              <div className="flex items-start gap-3">
-                <div className="bg-brand-babyBlue text-white p-2 rounded">
-                  <Phone size={18} />
+            <div className="space-y-6 mb-10">
+              <div className="flex items-start gap-4">
+                <div className="bg-brand-babyBlue/10 text-brand-babyBlue p-3 rounded-lg shrink-0">
+                  <Phone size={22} />
                 </div>
                 <div>
-                  <div className="text-sm text-gray-500">Phone</div>
-                  <div className="font-semibold">+27 12 345 6789</div>
+                  <div className="text-sm text-gray-500 font-medium mb-1">Telephone / Office</div>
+                  <a href="tel:0315050898" className="font-semibold text-lg hover:text-brand-red transition-colors block">
+                    031 505 0898
+                  </a>
                 </div>
               </div>
-              <div className="flex items-start gap-3">
-                <div className="bg-brand-babyBlue text-white p-2 rounded">
-                  <Mail size={18} />
+
+              <div className="flex items-start gap-4">
+                <div className="bg-brand-babyBlue/10 text-brand-babyBlue p-3 rounded-lg shrink-0">
+                  <Smartphone size={22} />
                 </div>
                 <div>
-                  <div className="text-sm text-gray-500">Email</div>
-                  <div className="font-semibold">info@advancedair.co.za</div>
+                  <div className="text-sm text-gray-500 font-medium mb-1">Cell / Mobile</div>
+                  <a href="tel:0829240268" className="font-semibold text-lg hover:text-brand-red transition-colors block">
+                    082 924 0268
+                  </a>
                 </div>
               </div>
-              <div className="flex items-start gap-3">
-                <div className="bg-brand-babyBlue text-white p-2 rounded">
-                  <MapPin size={18} />
+
+              <div className="flex items-start gap-4">
+                <div className="bg-brand-babyBlue/10 text-brand-babyBlue p-3 rounded-lg shrink-0">
+                  <Printer size={22} />
                 </div>
                 <div>
-                  <div className="text-sm text-gray-500">Address</div>
-                  <div className="font-semibold">12 Industrial Road, Pretoria, 0001</div>
+                  <div className="text-sm text-gray-500 font-medium mb-1">Fax</div>
+                  <div className="font-semibold text-gray-700 block">
+                    031 505 0899
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="bg-brand-babyBlue/10 text-brand-babyBlue p-3 rounded-lg shrink-0">
+                  <Mail size={22} />
+                </div>
+                <div>
+                  <div className="text-sm text-gray-500 font-medium mb-1">Email</div>
+                  <a href="mailto:advancedair@absamail.co.za" className="font-semibold text-lg hover:text-brand-red transition-colors block">
+                    advancedair@absamail.co.za
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="bg-brand-babyBlue/10 text-brand-babyBlue p-3 rounded-lg shrink-0">
+                  <Globe size={22} />
+                </div>
+                <div>
+                  <div className="text-sm text-gray-500 font-medium mb-1">Website</div>
+                  <a href="http://www.advancedairsa.co.za" target="_blank" rel="noopener noreferrer" className="font-semibold text-lg hover:text-brand-red transition-colors block">
+                    www.advancedairsa.co.za
+                  </a>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <div className="flex items-center gap-2 mb-4">
-                <Clock size={18} className="text-brand-red" />
-                <h3 className="font-bold">Business Hours</h3>
+          {/* Right Column: Business Hours & Service Area */}
+          <div className="flex flex-col justify-center">
+            <div className="bg-white rounded-xl shadow-sm p-8 border border-gray-100 mb-8">
+              <div className="flex items-center gap-3 mb-6">
+                <Clock size={24} className="text-brand-red" />
+                <h3 className="font-display text-2xl">Business Hours</h3>
               </div>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span>Monday – Friday</span>
+              
+              <div className="space-y-4 text-base">
+                <div className="flex justify-between border-b border-gray-100 pb-2">
+                  <span className="text-gray-600">Monday – Friday</span>
                   <span className="font-semibold">07:30 – 17:30</span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Saturday</span>
+                <div className="flex justify-between border-b border-gray-100 pb-2">
+                  <span className="text-gray-600">Saturday</span>
                   <span className="font-semibold">08:00 – 14:00</span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Sunday</span>
+                <div className="flex justify-between border-b border-gray-100 pb-2">
+                  <span className="text-gray-600">Sunday</span>
                   <span className="font-semibold">Closed</span>
                 </div>
-                <div className="text-brand-red font-semibold pt-2 border-t mt-2">
-                  Emergency callouts: 24/7, all year
+                <div className="text-brand-red font-semibold pt-2 flex items-center gap-2">
+                  <span className="relative flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-red opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-brand-red"></span>
+                  </span>
+                  Emergency callouts: 24/7
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Right: form */}
-          <div className="bg-white rounded-lg shadow-sm p-6 md:p-8">
-            {submitted ? (
-              <div className="text-center py-16">
-                <div className="text-brand-red font-display text-3xl mb-4">THANK YOU</div>
-                <p className="text-gray-600">
-                  Your message has been received. We'll be in touch shortly.
-                </p>
+            {/* Service Area Box */}
+            <div className="bg-brand-navy text-white rounded-xl shadow-sm p-8">
+              <div className="flex items-center gap-3 mb-4">
+                <MapPin size={24} className="text-brand-babyBlue" />
+                <h3 className="font-display text-2xl">Service Area</h3>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FormField label="Full Name" required>
-                    <input
-                      required
-                      type="text"
-                      placeholder="John Smith"
-                      className="input-field"
-                      value={fullName}
-                      onChange={e => setFullName(e.target.value)}
-                    />
-                  </FormField>
-                  <FormField label="Email Address" required>
-                    <input
-                      required
-                      type="email"
-                      placeholder="john@example.com"
-                      className="input-field"
-                      value={email}
-                      onChange={e => setEmail(e.target.value)}
-                    />
-                  </FormField>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FormField label="Phone Number" required>
-                    <input
-                      required
-                      type="tel"
-                      placeholder="+27 82 000 0000"
-                      className="input-field"
-                      value={phone}
-                      onChange={e => setPhone(e.target.value)}
-                    />
-                  </FormField>
-                  <FormField label="Subject" required>
-                    <input
-                      required
-                      type="text"
-                      placeholder="How can we help?"
-                      className="input-field"
-                      value={subject}
-                      onChange={e => setSubject(e.target.value)}
-                    />
-                  </FormField>
-                </div>
-
-                <FormField label="Message" required>
-                  <textarea
-                    required
-                    rows={5}
-                    placeholder="Tell us about your enquiry..."
-                    className="input-field"
-                    value={message}
-                    onChange={e => setMessage(e.target.value)}
-                  />
-                </FormField>
-
-                <label className="flex items-start gap-2 text-sm text-gray-600">
-                  <input
-                    type="checkbox"
-                    checked={agree}
-                    onChange={e => setAgree(e.target.checked)}
-                    className="mt-1"
-                    required
-                  />
-                  <span>
-                    I agree to being contacted regarding my inquiry and consent to my data being
-                    used to respond to this message.
-                  </span>
-                </label>
-
-                {error && (
-                  <div className="text-brand-red text-sm">{error}</div>
-                )}
-
-                <button
-                  type="submit"
-                  className="btn-secondary w-full disabled:opacity-60"
-                  disabled={submitting}
-                >
-                  {submitting ? 'Sending…' : 'Send Message'}
-                </button>
-              </form>
-            )}
+              <p className="text-gray-300 leading-relaxed">
+                We are proud to provide expert HVAC services, sales, and repairs to residential and commercial clients across the entire <strong className="text-white">KwaZulu-Natal (KZN)</strong> region.
+              </p>
+            </div>
           </div>
+
         </div>
       </section>
     </>
