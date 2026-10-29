@@ -10,7 +10,7 @@
 @layer components {
   .btn-primary {
     @apply bg-brand-red hover:bg-brand-redHover text-white font-semibold
-           px-6 py-3 rounded-md transition-colors duration-200;
+           px-6 py-3 rounded-md transition-colors duration-200 shadow-sm hover:shadow-md;
   }
   .btn-secondary {
     @apply bg-brand-navy hover:bg-brand-blue text-white font-semibold
@@ -29,11 +29,11 @@
   }
   .card {
     @apply bg-white rounded-lg shadow-sm border border-gray-100
-           overflow-hidden hover:shadow-md transition-shadow;
+           overflow-hidden hover:shadow-lg hover:border-brand-babyBlue/30 transition-all duration-200;
   }
-    .input-field {
-    @apply w-full px-4 py-3 border border-gray-300 rounded-md
-           focus:outline-none focus:ring-2 focus:ring-brand-blue
-           focus:border-transparent;
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-md text-brand-navy
+           focus:outline-none focus:ring-2 focus:ring-brand-babyBlue
+           focus:border-transparent transition;
   }
 }

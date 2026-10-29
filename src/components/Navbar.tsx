@@ -1,6 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
 import { useState } from 'react';
-import { Menu, X, Wind } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const navLinks = [
   { to: '/',          label: 'Home' },
@@ -16,37 +16,43 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="bg-brand-navy text-white sticky top-0 z-50">
-      <div className="container-narrow flex items-center justify-between px-4 md:px-8 py-4">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <div className="bg-brand-red p-2 rounded">
-            <Wind size={20} />
-          </div>
-          <div className="leading-tight">
-            <div className="font-bold text-lg">ADVANCED <span className="text-brand-red">AIR</span></div>
-            <div className="text-[10px] tracking-widest text-gray-300">CONDITIONING</div>
-          </div>
+    <header className="bg-brand-navy text-white sticky top-0 z-50 shadow-md">
+      <div className="container-narrow flex items-center justify-between px-4 md:px-8 py-3">
+        
+        {/* LOGO SECTION - Updated */}
+        <Link to="/" className="flex items-center">
+          {/* 
+            If your logo has a white background, use mix-blend-multiply to blend it. 
+            If it's a transparent PNG, you can remove the mix-blend class.
+            Adjust 'h-12' to make the logo bigger or smaller.
+          */}
+          <img 
+            src="/images/logo.png" 
+            alt="Advanced Air Conditioning Logo" 
+            className="h-10 md:h-12 w-auto object-contain mix-blend-screen" 
+            // Note: Use mix-blend-screen if the logo has a dark background, 
+            // or remove the class if the logo is a transparent PNG.
+          />
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-6 text-sm">
+        <nav className="hidden lg:flex items-center gap-6 text-sm font-medium">
           {navLinks.map(l => (
             <NavLink
               key={l.to}
               to={l.to}
               className={({ isActive }) =>
-                `hover:text-brand-red transition-colors ${isActive ? 'text-brand-red font-semibold' : ''}`
+                `hover:text-brand-babyBlue transition-colors ${isActive ? 'text-brand-babyBlue' : 'text-gray-200'}`
               }
             >
               {l.label}
             </NavLink>
           ))}
-          <Link to="/quote" className="btn-primary text-sm py-2 px-4">Get a Quote</Link>
+          <Link to="/quote" className="btn-primary text-sm py-2 px-5 ml-2">Get a Quote</Link>
         </nav>
 
         {/* Mobile toggle */}
-        <button onClick={() => setOpen(!open)} className="lg:hidden">
+        <button onClick={() => setOpen(!open)} className="lg:hidden text-gray-200 hover:text-white">
           {open ? <X /> : <Menu />}
         </button>
       </div>
@@ -55,11 +61,18 @@ export default function Navbar() {
       {open && (
         <div className="lg:hidden bg-brand-navy border-t border-white/10 px-4 py-4 space-y-3">
           {navLinks.map(l => (
-            <NavLink key={l.to} to={l.to} onClick={() => setOpen(false)} className="block py-2">
+            <NavLink 
+              key={l.to} 
+              to={l.to} 
+              onClick={() => setOpen(false)} 
+              className={({ isActive }) =>
+                `block py-2 font-medium ${isActive ? 'text-brand-babyBlue' : 'text-gray-200'}`
+              }
+            >
               {l.label}
             </NavLink>
           ))}
-          <Link to="/quote" onClick={() => setOpen(false)} className="btn-primary block text-center">Get a Quote</Link>
+          <Link to="/quote" onClick={() => setOpen(false)} className="btn-primary block text-center mt-4">Get a Quote</Link>
         </div>
       )}
     </header>

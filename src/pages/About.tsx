@@ -109,7 +109,13 @@ export default function About() {
             ))}
           </div>
           <div className="text-center mt-12">
-            <a href="mailto:info@advancedair.co.za" className="btn-primary inline-block">Get in Touch</a>
+            {/* This mailto: link triggers the default email client (like Outlook) */}
+            <a 
+              href="mailto:info@advancedair.co.za?subject=Website%20Inquiry" 
+              className="btn-primary inline-block"
+            >
+              Get in Touch
+            </a>
           </div>
         </div>
       </section>

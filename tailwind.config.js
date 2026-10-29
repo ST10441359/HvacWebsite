@@ -5,18 +5,16 @@ export default {
     extend: {
       colors: {
         brand: {
-          // The core brand colours from the logo
-          red:       '#D32029', // The red swoosh
-          redHover:  '#B01820',
-          blue:      '#2C2A6B', // The deep blue text
-          blueHover: '#1F1E4E',
-          
-          // The dark background 
-          navy:      '#0B0B1A', 
-          
-          // Replacing the old light blues with neutral/grey tones
-          lightBlue: '#F1F5F9', // For subtle backgrounds/badges
-          grey:      '#9CA3AF', // For outlines/secondary text
+          // The deep, professional background color
+          navy:      '#091B2C', 
+          // A slightly lighter navy for sections that need to sit above the background
+          blue:      '#112D4A', 
+          // The vibrant red from the logo (used for primary buttons and accents)
+          red:       '#E31E24', 
+          redHover:  '#C5161C', 
+          // The bright, icy blue from the logo (used for badges and secondary accents)
+          babyBlue:  '#3A8EE6', 
+          lightBlue: '#EAF4FF',
         },
       },
       fontFamily: {

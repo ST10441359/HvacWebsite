@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <>
-      {/* HERO */}
+          {/* HERO */}
       <section
         className="relative bg-brand-navy text-white min-h-[85vh] flex items-center"
         style={{
@@ -33,12 +33,14 @@ export default function Home() {
           backgroundPosition: 'center',
         }}
       >
-        <div className="absolute inset-0 bg-brand-navy/85" />
+        {/* Changed overlay to use the new deep navy with 90% opacity for better text readability */}
+        <div className="absolute inset-0 bg-brand-navy/90" />
+        
         <div className="container-narrow relative px-4 md:px-8 py-20">
-          <div className="inline-flex items-center gap-2 border border-brand-red/40 text-brand-red text-xs font-semibold tracking-widest px-3 py-1 rounded mb-6">
+          <div className="inline-flex items-center gap-2 border border-brand-red/40 text-brand-red text-xs font-semibold tracking-widest px-3 py-1 rounded mb-6 bg-brand-red/10">
             <BadgeCheck size={14} /> CERTIFIED AC PROFESSIONALS
           </div>
-          <h1 className="font-display text-5xl md:text-7xl leading-none mb-4">
+          <h1 className="font-display text-5xl md:text-7xl leading-none mb-4 tracking-wide">
             STAY COOL.<br />
             <span className="text-brand-red">STAY COMFORTABLE.</span>
           </h1>
@@ -50,8 +52,8 @@ export default function Home() {
             <Link to="/quote" className="btn-primary flex items-center gap-2">
               Get a Quote <ArrowRight size={16} />
             </Link>
-            <Link to="/callout" className="btn-secondary">Book a Callout</Link>
-            <Link to="/btu" className="btn-secondary flex items-center gap-2">
+            <Link to="/callout" className="btn-secondary border border-white/20">Book a Callout</Link>
+            <Link to="/btu" className="btn-secondary border border-white/20 flex items-center gap-2">
               <Calculator size={16} /> BTU Calculator
             </Link>
           </div>
