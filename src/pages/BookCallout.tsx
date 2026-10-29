@@ -150,7 +150,6 @@ export default function BookCallout() {
                     >
                       <option>Phone Call</option>
                       <option>Email</option>
-                      <option>WhatsApp</option>
                     </select>
                   </FormField>
                   <FormField label="Preferred Visit Time (optional)">
