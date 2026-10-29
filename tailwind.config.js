@@ -5,12 +5,18 @@ export default {
     extend: {
       colors: {
         brand: {
-          navy:      '#0B1B33',
-          blue:      '#1E3A5F',
-          babyBlue:  '#4FA8D8',
-          lightBlue: '#E1F1FB',
-          red:       '#D32029',
+          // The core brand colours from the logo
+          red:       '#D32029', // The red swoosh
           redHover:  '#B01820',
+          blue:      '#2C2A6B', // The deep blue text
+          blueHover: '#1F1E4E',
+          
+          // The dark background 
+          navy:      '#0B0B1A', 
+          
+          // Replacing the old light blues with neutral/grey tones
+          lightBlue: '#F1F5F9', // For subtle backgrounds/badges
+          grey:      '#9CA3AF', // For outlines/secondary text
         },
       },
       fontFamily: {
