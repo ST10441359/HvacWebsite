@@ -60,15 +60,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* STATS */}
-      <section className="bg-brand-blue text-white py-8">
-        <div className="container-narrow grid grid-cols-2 md:grid-cols-4 gap-6 px-4 md:px-8 text-center">
-          {['500+', '15+', '24/7', '100%'].map(v => (
-            <div key={v} className="font-display text-3xl md:text-4xl text-brand-red">{v}</div>
-          ))}
-        </div>
-      </section>
-
       {/* SERVICES */}
       <section className="section-padding bg-gray-50">
         <div className="container-narrow">
