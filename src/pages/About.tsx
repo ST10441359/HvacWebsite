@@ -5,8 +5,8 @@ const certifications = [
   'RACCA Member',
   'Samsung Approved',
   'Daikin Partner',
-  'Midea Certified',
-  'Mitsubishi Partner',
+  'Carrier Approved',
+  'LG Partner',
   'ISO 9001',
   'Safe Contractor',
 ];
