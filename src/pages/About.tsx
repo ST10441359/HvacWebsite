@@ -36,7 +36,7 @@ export default function About() {
               </p>
               <p>
                 Today, our team of fully certified engineers brings decades of combined experience to every
-                project. We work with all major brands — Samsung, Daikin, Mitsubishi, Midea, LG, and Carrier 
+                project. We work with all major brands - Samsung, Daikin, Mitsubishi, Midea, LG, and Carrier 
                 and hold manufacturer-approved installer status with several of them.
               </p>
               <p>
