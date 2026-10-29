@@ -75,10 +75,10 @@ export default function RequestQuote() {
 
   return (
     <>
-      <section className="bg-brand-navy text-white py-20 text-center">
-        <div className="container-narrow px-4">
-          <h1 className="font-display text-5xl md:text-6xl mb-3">REQUEST A QUOTE</h1>
-          <p className="text-gray-300">
+      <section className="bg-brand-navy text-white py-16 md:py-20 text-center px-4">
+        <div className="container-narrow">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl mb-3">REQUEST A QUOTE</h1>
+          <p className="text-gray-300 text-lg">
             Tell us about your requirements and receive a detailed, obligation-free quote.
           </p>
         </div>
@@ -86,7 +86,7 @@ export default function RequestQuote() {
 
       <section className="section-padding bg-gray-50">
         <div className="container-narrow max-w-3xl">
-          <div className="bg-white rounded-lg shadow-sm p-6 md:p-8">
+          <div className="bg-white rounded-lg shadow-sm p-5 sm:p-6 md:p-8">
             {submitted ? (
               <div className="text-center py-16">
                 <div className="text-brand-red font-display text-3xl mb-4">QUOTE REQUESTED</div>
@@ -98,7 +98,7 @@ export default function RequestQuote() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* SECTION 1 */}
                 <div>
-                  <h2 className="font-display text-2xl mb-4">YOUR DETAILS</h2>
+                  <h2 className="font-display text-xl md:text-2xl mb-4">YOUR DETAILS</h2>
                   <div className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <FormField label="Full Name" required>
@@ -177,7 +177,7 @@ export default function RequestQuote() {
 
                 {/* SECTION 2 */}
                 <div>
-                  <h2 className="font-display text-2xl mb-2">ROOM DETAILS</h2>
+                  <h2 className="font-display text-xl md:text-2xl mb-2">ROOM DETAILS</h2>
                   <p className="text-sm text-gray-500 mb-4">
                     Add each room or area you need serviced. We tailor the quote to each space.
                   </p>
@@ -225,7 +225,7 @@ export default function RequestQuote() {
                           <FormField label="Notes (optional)">
                             <input
                               type="text"
-                              placeholder="e.g. sun-facing, high ceiling"
+                              placeholder="e.g. sun-facing"
                               value={room.notes}
                               onChange={e => updateRoom(room.id, { notes: e.target.value })}
                               className="input-field"
@@ -239,7 +239,7 @@ export default function RequestQuote() {
                   <button
                     type="button"
                     onClick={addRoom}
-                    className="mt-4 text-brand-red font-semibold flex items-center gap-2 hover:underline"
+                    className="mt-4 text-brand-red font-semibold flex items-center gap-2 hover:underline text-sm md:text-base"
                   >
                     <Plus size={16} /> Add Another Room
                   </button>
@@ -258,7 +258,7 @@ export default function RequestQuote() {
                   <FormField label="Additional Information">
                     <textarea
                       rows={4}
-                      placeholder="Property details, access notes, existing units, anything else..."
+                      placeholder="Property details, access notes, existing units..."
                       className="input-field"
                       value={additionalInformation}
                       onChange={e => setAdditionalInformation(e.target.value)}
@@ -266,18 +266,18 @@ export default function RequestQuote() {
                   </FormField>
                 </div>
 
-                <label className="flex items-start gap-2 text-sm text-gray-600">
+                <label className="flex items-start gap-3 text-sm text-gray-600">
                   <input
                     type="checkbox"
                     checked={agree}
                     onChange={e => setAgree(e.target.checked)}
-                    className="mt-1"
+                    className="mt-1 w-4 h-4"
                     required
                   />
                   <span>I agree to being contacted regarding my inquiry.</span>
                 </label>
 
-                {error && <div className="text-brand-red text-sm">{error}</div>}
+                {error && <div className="text-brand-red text-sm bg-red-50 p-3 rounded">{error}</div>}
 
                 <button
                   type="submit"

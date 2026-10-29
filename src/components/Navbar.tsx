@@ -19,19 +19,12 @@ export default function Navbar() {
     <header className="bg-brand-navy text-white sticky top-0 z-50 shadow-md">
       <div className="container-narrow flex items-center justify-between px-4 md:px-8 py-3">
         
-        {/* LOGO SECTION - Updated */}
+        {/* LOGO SECTION */}
         <Link to="/" className="flex items-center">
-          {/* 
-            If your logo has a white background, use mix-blend-multiply to blend it. 
-            If it's a transparent PNG, you can remove the mix-blend class.
-            Adjust 'h-12' to make the logo bigger or smaller.
-          */}
           <img 
             src="/images/logo.png" 
             alt="Advanced Air Conditioning Logo" 
-            className="h-10 md:h-12 w-auto object-contain mix-blend-screen" 
-            // Note: Use mix-blend-screen if the logo has a dark background, 
-            // or remove the class if the logo is a transparent PNG.
+            className="h-8 sm:h-10 md:h-12 w-auto object-contain mix-blend-screen" 
           />
         </Link>
 
@@ -52,21 +45,21 @@ export default function Navbar() {
         </nav>
 
         {/* Mobile toggle */}
-        <button onClick={() => setOpen(!open)} className="lg:hidden text-gray-200 hover:text-white">
-          {open ? <X /> : <Menu />}
+        <button onClick={() => setOpen(!open)} className="lg:hidden text-gray-200 hover:text-white p-2">
+          {open ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
       {/* Mobile menu */}
       {open && (
-        <div className="lg:hidden bg-brand-navy border-t border-white/10 px-4 py-4 space-y-3">
+        <div className="lg:hidden bg-brand-navy border-t border-white/10 px-4 py-4 space-y-2 absolute w-full shadow-xl">
           {navLinks.map(l => (
             <NavLink 
               key={l.to} 
               to={l.to} 
               onClick={() => setOpen(false)} 
               className={({ isActive }) =>
-                `block py-2 font-medium ${isActive ? 'text-brand-babyBlue' : 'text-gray-200'}`
+                `block py-3 px-2 text-lg font-medium border-b border-white/5 ${isActive ? 'text-brand-babyBlue' : 'text-gray-200'}`
               }
             >
               {l.label}

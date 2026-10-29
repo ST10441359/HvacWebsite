@@ -12,48 +12,39 @@ export default function Home() {
   const [services, setServices] = useState<ServiceItem[]>([]);
 
   useEffect(() => {
-    fetchProducts()
-      .then(setProducts)
-      .catch(err => console.error('Failed to fetch products:', err));
-    fetchServices()
-      .then(setServices)
-      .catch(err => console.error('Failed to fetch services:', err));
+    fetchProducts().then(setProducts).catch(err => console.error(err));
+    fetchServices().then(setServices).catch(err => console.error(err));
   }, []);
 
   const featured = products.slice(0, 3);
 
   return (
     <>
-          {/* HERO */}
+      {/* HERO */}
       <section
         className="relative bg-brand-navy text-white min-h-[85vh] flex items-center"
-        style={{
-          backgroundImage: 'url(/images/hero.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
+        style={{ backgroundImage: 'url(/images/hero.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}
       >
-        {/* Changed overlay to use the new deep navy with 90% opacity for better text readability */}
         <div className="absolute inset-0 bg-brand-navy/90" />
         
-        <div className="container-narrow relative px-4 md:px-8 py-20">
+        <div className="container-narrow relative px-4 md:px-8 py-16 md:py-20">
           <div className="inline-flex items-center gap-2 border border-brand-red/40 text-brand-red text-xs font-semibold tracking-widest px-3 py-1 rounded mb-6 bg-brand-red/10">
             <BadgeCheck size={14} /> CERTIFIED AC PROFESSIONALS
           </div>
-          <h1 className="font-display text-5xl md:text-7xl leading-none mb-4 tracking-wide">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight md:leading-none mb-4 tracking-wide">
             STAY COOL.<br />
             <span className="text-brand-red">STAY COMFORTABLE.</span>
           </h1>
-          <p className="max-w-xl text-gray-300 mb-8 text-lg">
+          <p className="max-w-xl text-gray-300 mb-8 text-base md:text-lg">
             Advanced Air Conditioning delivers expert installation, repair, and maintenance
             for homes and businesses across the region. Over 15 years of certified excellence.
           </p>
-          <div className="flex flex-wrap gap-3">
-            <Link to="/quote" className="btn-primary flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3">
+            <Link to="/quote" className="btn-primary flex items-center justify-center gap-2 w-full sm:w-auto">
               Get a Quote <ArrowRight size={16} />
             </Link>
-            <Link to="/callout" className="btn-secondary border border-white/20">Book a Callout</Link>
-            <Link to="/btu" className="btn-secondary border border-white/20 flex items-center gap-2">
+            <Link to="/callout" className="btn-secondary border border-white/20 w-full sm:w-auto">Book a Callout</Link>
+            <Link to="/btu" className="btn-secondary border border-white/20 flex items-center justify-center gap-2 w-full sm:w-auto">
               <Calculator size={16} /> BTU Calculator
             </Link>
           </div>
@@ -63,9 +54,9 @@ export default function Home() {
       {/* SERVICES */}
       <section className="section-padding bg-gray-50">
         <div className="container-narrow">
-          <div className="text-center mb-12">
-            <h2 className="font-display text-4xl md:text-5xl mb-3">OUR SERVICES</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl mb-3">OUR SERVICES</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">
               From single-room splits to commercial multi-zone systems. Every aspect of air conditioning covered.
             </p>
           </div>
@@ -86,20 +77,20 @@ export default function Home() {
               );
             })}
           </div>
-          <div className="text-center mt-12">
-            <Link to="/services" className="btn-secondary inline-flex">View All Services</Link>
+          <div className="text-center mt-10 md:mt-12">
+            <Link to="/services" className="btn-secondary inline-flex w-full sm:w-auto">View All Services</Link>
           </div>
         </div>
       </section>
 
       {/* WHY CHOOSE */}
       <section className="section-padding bg-brand-navy text-white">
-        <div className="container-narrow grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="container-narrow grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           <div>
-            <h2 className="font-display text-4xl md:text-5xl mb-6">
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl mb-6">
               WHY CHOOSE<br /><span className="text-brand-red">ADVANCED AIR?</span>
             </h2>
-            <p className="text-gray-300 mb-8">
+            <p className="text-gray-300 mb-8 text-sm md:text-base">
               We built our reputation on technical excellence, transparent pricing, and aftercare that goes beyond the job sheet.
             </p>
             <ul className="space-y-3 mb-8">
@@ -110,19 +101,19 @@ export default function Home() {
                 '12-month guarantee on all parts and labour',
                 'Same-day emergency callouts, 365 days a year',
               ].map(item => (
-                <li key={item} className="flex items-start gap-3 text-sm">
+                <li key={item} className="flex items-start gap-3 text-sm md:text-base">
                   <ShieldCheck size={18} className="text-brand-red shrink-0 mt-0.5" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
-            <Link to="/about" className="btn-outline inline-block">Learn About Us</Link>
+            <Link to="/about" className="btn-outline inline-block w-full sm:w-auto text-center">Learn About Us</Link>
           </div>
-          <div className="relative">
+          <div className="relative mt-6 lg:mt-0">
             <img
               src="/images/Technician image.jpg"
               alt="Technician at work"
-              className="rounded-lg shadow-lg w-full"
+              className="rounded-lg shadow-lg w-full h-[300px] md:h-[400px] object-cover"
             />
             <div className="absolute bottom-4 left-4 bg-brand-red text-white px-4 py-2 rounded font-display text-2xl">
               15+ <span className="text-sm font-sans">Years Experience</span>
@@ -134,16 +125,16 @@ export default function Home() {
       {/* FEATURED UNITS */}
       <section className="section-padding bg-gray-50">
         <div className="container-narrow">
-          <div className="text-center mb-12">
-            <h2 className="font-display text-4xl md:text-5xl mb-3">FEATURED UNITS</h2>
-            <p className="text-gray-600">Top-of-the-range air conditioning units for every room size and budget.</p>
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl mb-3">FEATURED UNITS</h2>
+            <p className="text-gray-600 text-sm md:text-base">Top-of-the-range air conditioning units for every room size and budget.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featured.map(p => (
-              <div key={p.id} className="card">
+              <div key={p.id} className="card flex flex-col">
                 <img src={p.image} alt={p.name} className="w-full h-48 object-cover" />
-                <div className="p-5">
-                  <div className="flex items-center justify-between mb-2 gap-3">
+                <div className="p-5 flex flex-col flex-1">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-2">
                     <h3 className="font-bold leading-tight">{p.name}</h3>
                     <span className="text-brand-red font-bold whitespace-nowrap">{formatZAR(p.price)}</span>
                   </div>
@@ -152,13 +143,13 @@ export default function Home() {
                     <span className="bg-brand-navy text-white text-xs px-2 py-1 rounded">{formatBTU(p.btu)}</span>
                     <span className="bg-brand-lightBlue text-brand-navy text-xs px-2 py-1 rounded">{p.coverage}</span>
                   </div>
-                  <Link to="/quote" className="btn-primary block text-center text-sm">Request Quote</Link>
+                  <Link to="/quote" className="btn-primary block text-center text-sm mt-auto">Request Quote</Link>
                 </div>
               </div>
             ))}
           </div>
-          <div className="text-center mt-12">
-            <Link to="/products" className="btn-secondary inline-flex">View All Products</Link>
+          <div className="text-center mt-10 md:mt-12">
+            <Link to="/products" className="btn-secondary inline-flex w-full sm:w-auto">View All Products</Link>
           </div>
         </div>
       </section>
@@ -166,18 +157,18 @@ export default function Home() {
       {/* EMERGENCY BANNER */}
       <section className="bg-brand-red text-white section-padding">
         <div className="container-narrow text-center">
-          <h2 className="font-display text-4xl md:text-5xl mb-4">NEED A TECHNICIAN TODAY?</h2>
-          <p className="mb-8 text-white/90">
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl mb-4">NEED A TECHNICIAN TODAY?</h2>
+          <p className="mb-8 text-white/90 text-sm md:text-base">
             Our team handles installations, repairs, and emergency callouts all year round.
           </p>
-          <div className="flex flex-wrap gap-3 justify-center">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center">
             <a
-              href="tel: 031 505 0898"
-              className="bg-white text-brand-red font-semibold px-6 py-3 rounded-md flex items-center gap-2"
+              href="tel:0315050898"
+              className="bg-white text-brand-red font-semibold px-6 py-3 rounded-md flex items-center justify-center gap-2 w-full sm:w-auto"
             >
               <Phone size={18} /> Call Now 031 505 0898
             </a>
-            <Link to="/callout" className="btn-outline">Book a Callout Online</Link>
+            <Link to="/callout" className="btn-outline w-full sm:w-auto">Book a Callout Online</Link>
           </div>
         </div>
       </section>

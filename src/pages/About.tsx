@@ -15,19 +15,19 @@ export default function About() {
   return (
     <>
       {/* HERO */}
-      <section className="bg-brand-navy text-white py-20 text-center">
-        <div className="container-narrow px-4">
-          <h1 className="font-display text-5xl md:text-6xl mb-3">ABOUT US</h1>
-          <p className="text-gray-300">Over 15 years of trusted air conditioning expertise across the region.</p>
+      <section className="bg-brand-navy text-white py-16 md:py-20 text-center px-4">
+        <div className="container-narrow">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl mb-3">ABOUT US</h1>
+          <p className="text-gray-300 text-lg">Over 15 years of trusted air conditioning expertise across the region.</p>
         </div>
       </section>
 
       {/* OUR STORY */}
       <section className="section-padding">
-        <div className="container-narrow grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="container-narrow grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           <div>
-            <h2 className="font-display text-4xl mb-6">OUR STORY</h2>
-            <div className="space-y-4 text-gray-700">
+            <h2 className="font-display text-3xl md:text-4xl mb-6">OUR STORY</h2>
+            <div className="space-y-4 text-gray-700 text-base md:text-lg">
               <p>
                 Advanced Air Conditioning was founded in 2009 with a single mission: to provide honest,
                 professional air conditioning services that residents and businesses could truly rely on.
@@ -45,11 +45,11 @@ export default function About() {
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 gap-4 mt-8 lg:mt-0">
             <img
               src="/images/Technician image.jpg"
               alt="Technician at work"
-              className="rounded-lg shadow-md w-full h-full object-cover"
+              className="rounded-lg shadow-md w-full h-[300px] md:h-[400px] object-cover"
             />
           </div>
         </div>
@@ -58,12 +58,12 @@ export default function About() {
       {/* WHAT WE STAND FOR */}
       <section className="section-padding bg-gray-50">
         <div className="container-narrow">
-          <h2 className="font-display text-4xl md:text-5xl text-center mb-12">WHAT WE STAND FOR</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-center mb-10 md:mb-12">WHAT WE STAND FOR</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="card p-6 border-t-4 border-brand-red">
               <Target className="text-brand-red mb-4" size={32} />
               <h3 className="font-bold text-lg mb-3">Our Mission</h3>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm md:text-base text-gray-600">
                 To deliver expert, honest, and reliable air conditioning solutions that improve comfort and
                 efficiency for every client whether residential or commercial.
               </p>
@@ -71,7 +71,7 @@ export default function About() {
             <div className="card p-6 border-t-4 border-brand-red">
               <Eye className="text-brand-red mb-4" size={32} />
               <h3 className="font-bold text-lg mb-3">Our Vision</h3>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm md:text-base text-gray-600">
                 To be the most trusted air conditioning company in the region, known for technical excellence,
                 fair pricing, and outstanding aftercare.
               </p>
@@ -79,7 +79,7 @@ export default function About() {
             <div className="card p-6 border-t-4 border-brand-red">
               <Heart className="text-brand-red mb-4" size={32} />
               <h3 className="font-bold text-lg mb-3">Our Values</h3>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm md:text-base text-gray-600">
                 Integrity in every quote. Quality in every installation. Respect for every client's time and
                 property. These aren't just words, they shape every job we take on.
               </p>
@@ -91,8 +91,8 @@ export default function About() {
       {/* CERTIFICATIONS */}
       <section className="section-padding bg-brand-navy text-white">
         <div className="container-narrow">
-          <h2 className="font-display text-4xl md:text-5xl text-center mb-12">CERTIFICATIONS & AFFILIATIONS</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-center mb-10 md:mb-12">CERTIFICATIONS & AFFILIATIONS</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {certifications.map(c => (
               <div
                 key={c}
@@ -104,10 +104,9 @@ export default function About() {
             ))}
           </div>
           <div className="text-center mt-12">
-            {/* This mailto: link triggers the default email client (like Outlook) */}
             <a 
               href="mailto:info@advancedair.co.za?subject=Website%20Inquiry" 
-              className="btn-primary inline-block"
+              className="btn-primary inline-block w-full sm:w-auto"
             >
               Get in Touch
             </a>
