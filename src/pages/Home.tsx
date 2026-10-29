@@ -66,7 +66,7 @@ export default function Home() {
           <div className="text-center mb-12">
             <h2 className="font-display text-4xl md:text-5xl mb-3">OUR SERVICES</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              From single-room splits to commercial multi-zone systems — every aspect of air conditioning covered.
+              From single-room splits to commercial multi-zone systems. Every aspect of air conditioning covered.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
