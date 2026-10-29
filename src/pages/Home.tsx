@@ -120,7 +120,7 @@ export default function Home() {
           </div>
           <div className="relative">
             <img
-              src="/images/technician.jpg"
+              src="/images/Technician image.jpg"
               alt="Technician at work"
               className="rounded-lg shadow-lg w-full"
             />

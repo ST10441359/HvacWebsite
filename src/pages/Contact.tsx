@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin, Clock, Smartphone, Printer, Globe } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Smartphone, Printer } from 'lucide-react';
 
 export default function Contact() {
   return (
@@ -65,18 +65,6 @@ export default function Contact() {
                   <div className="text-sm text-gray-500 font-medium mb-1">Email</div>
                   <a href="mailto:advancedair@absamail.co.za" className="font-semibold text-lg hover:text-brand-red transition-colors block">
                     advancedair@absamail.co.za
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="bg-brand-babyBlue/10 text-brand-babyBlue p-3 rounded-lg shrink-0">
-                  <Globe size={22} />
-                </div>
-                <div>
-                  <div className="text-sm text-gray-500 font-medium mb-1">Website</div>
-                  <a href="http://www.advancedairsa.co.za" target="_blank" rel="noopener noreferrer" className="font-semibold text-lg hover:text-brand-red transition-colors block">
-                    www.advancedairsa.co.za
                   </a>
                 </div>
               </div>

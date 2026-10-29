@@ -45,15 +45,10 @@ export default function About() {
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             <img
-              src="/images/technician.jpg"
+              src="/images/Technician image.jpg"
               alt="Technician at work"
-              className="rounded-lg shadow-md w-full h-full object-cover"
-            />
-            <img
-              src="/images/hero.jpg"
-              alt="AC maintenance"
               className="rounded-lg shadow-md w-full h-full object-cover"
             />
           </div>
