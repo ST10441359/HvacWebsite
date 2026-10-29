@@ -26,7 +26,7 @@ export default function Services() {
         <div className="container-narrow px-4">
           <h1 className="font-display text-5xl md:text-6xl mb-3">OUR SERVICES</h1>
           <p className="text-gray-300">
-            Complete air conditioning solutions — from first install to ongoing maintenance.
+            Complete air conditioning solutions from first install to ongoing maintenance.
           </p>
         </div>
       </section>
@@ -86,7 +86,7 @@ export default function Services() {
         <div className="container-narrow text-center">
           <h2 className="font-display text-4xl md:text-5xl mb-4">AC BROKEN DOWN?</h2>
           <p className="mb-8 text-white/90">
-            Emergency callout service — 24 hours a day, 7 days a week, 365 days a year.
+            Emergency callout service: 24 hours a day, 7 days a week, 365 days a year.
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
             <a
