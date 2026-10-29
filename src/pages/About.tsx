@@ -36,12 +36,12 @@ export default function About() {
               </p>
               <p>
                 Today, our team of fully certified engineers brings decades of combined experience to every
-                project. We work with all major brands — Samsung, Daikin, Mitsubishi, Midea, LG, and Carrier —
+                project. We work with all major brands — Samsung, Daikin, Mitsubishi, Midea, LG, and Carrier 
                 and hold manufacturer-approved installer status with several of them.
               </p>
               <p>
                 Every quote is free and obligation-free. Every job is backed by our 12-month labour and parts
-                guarantee. We don't subcontract — the team that quotes your job installs it.
+                guarantee. We don't subcontract and the team that quotes your job installs it.
               </p>
             </div>
           </div>
@@ -65,7 +65,7 @@ export default function About() {
               <h3 className="font-bold text-lg mb-3">Our Mission</h3>
               <p className="text-sm text-gray-600">
                 To deliver expert, honest, and reliable air conditioning solutions that improve comfort and
-                efficiency for every client — residential or commercial.
+                efficiency for every client whether residential or commercial.
               </p>
             </div>
             <div className="card p-6 border-t-4 border-brand-red">
@@ -81,7 +81,7 @@ export default function About() {
               <h3 className="font-bold text-lg mb-3">Our Values</h3>
               <p className="text-sm text-gray-600">
                 Integrity in every quote. Quality in every installation. Respect for every client's time and
-                property. These aren't just words — they shape every job we take on.
+                property. These aren't just words, they shape every job we take on.
               </p>
             </div>
           </div>
