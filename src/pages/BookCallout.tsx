@@ -54,7 +54,7 @@ export default function BookCallout() {
             Request an engineer visit for emergency repairs, maintenance, or diagnostics.
           </p>
           <div className="text-brand-red font-semibold flex items-center justify-center gap-2">
-            <Phone size={18} /> Emergency? Call +27 12 345 6789
+            <Phone size={18} /> Emergency? Call 031 505 0898
           </div>
         </div>
       </section>

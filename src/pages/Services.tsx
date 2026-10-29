@@ -93,7 +93,7 @@ export default function Services() {
               href="tel:+27123456789"
               className="bg-white text-brand-red font-semibold px-6 py-3 rounded-md flex items-center gap-2"
             >
-              <Phone size={18} /> +27 12 345 6789
+              <Phone size={18} /> 031 505 0898
             </a>
             <Link to="/callout" className="btn-outline">Book Emergency Callout</Link>
           </div>

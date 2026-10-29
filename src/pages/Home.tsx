@@ -172,10 +172,10 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
             <a
-              href="tel:+27123456789"
+              href="tel: 031 505 0898"
               className="bg-white text-brand-red font-semibold px-6 py-3 rounded-md flex items-center gap-2"
             >
-              <Phone size={18} /> Call Now +27 12 345 6789
+              <Phone size={18} /> Call Now 031 505 0898
             </a>
             <Link to="/callout" className="btn-outline">Book a Callout Online</Link>
           </div>
