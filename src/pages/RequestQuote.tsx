@@ -141,7 +141,6 @@ export default function RequestQuote() {
                         >
                           <option>Email</option>
                           <option>Phone Call</option>
-                          <option>WhatsApp</option>
                         </select>
                       </FormField>
                     </div>
