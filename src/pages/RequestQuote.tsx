@@ -294,9 +294,11 @@ ${additionalInformation || 'None provided'}
                   <span className="select-none">I agree to being contacted regarding my inquiry. <span className="text-brand-red">*</span></span>
                 </label>
 
+                {/* UPDATED BUTTON LOGIC HERE */}
                 <button
                   type="submit"
-                  className="btn-primary w-full text-lg shadow-lg hover:shadow-xl transition-all"
+                  className={`btn-primary w-full text-lg shadow-lg transition-all ${!agree ? 'opacity-50 cursor-not-allowed hover:shadow-lg' : 'hover:shadow-xl'}`}
+                  disabled={!agree}
                 >
                   Submit Quote Request
                 </button>
