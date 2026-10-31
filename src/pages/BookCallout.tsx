@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { Phone } from 'lucide-react';
+import { Phone, AlertCircle } from 'lucide-react';
 import FormField from '../components/FormField';
-import { sendCalloutRequest } from '../api/callout';
 
 export default function BookCallout() {
   const [fullName, setFullName] = useState('');
@@ -13,36 +12,40 @@ export default function BookCallout() {
   const [preferredContactMethod, setPreferredContactMethod] = useState('Phone Call');
   const [preferredVisitTime, setPreferredVisitTime] = useState('');
   const [agree, setAgree] = useState(false);
-
-  const [submitting, setSubmitting] = useState(false);
+  
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!agree || submitting) return;
+    if (!agree) return; 
 
-    setSubmitting(true);
-    setError(null);
+    // 1. Build the email body
+    const emailBody = `
+NEW CALLOUT REQUEST
+----------------------------------------
+CUSTOMER DETAILS:
+Name: ${fullName}
+Phone: ${phone}
+Email: ${email}
+Preferred Contact: ${preferredContactMethod}
 
-    try {
-      await sendCalloutRequest({
-        fullName,
-        phone,
-        email,
-        urgency,
-        propertyAddress,
-        issueDescription,
-        preferredContactMethod,
-        preferredVisitTime: preferredVisitTime || undefined,
-      });
-      setSubmitted(true);
-    } catch (err) {
-      console.error(err);
-      setError('Could not book your callout. Is the backend running?');
-    } finally {
-      setSubmitting(false);
-    }
+CALLOUT DETAILS:
+Urgency: ${urgency}
+Property Address: ${propertyAddress}
+Preferred Visit Time: ${preferredVisitTime || 'As soon as possible'}
+
+ISSUE DESCRIPTION:
+${issueDescription}
+    `.trim();
+
+    // 2. Create mailto link
+    const mailtoLink = `mailto:advancedair@absamail.co.za?subject=${urgency} Callout Request from ${fullName}&body=${encodeURIComponent(emailBody)}`;
+
+    // 3. Open email client
+    window.location.href = mailtoLink;
+
+    // 4. Show success state
+    setSubmitted(true);
   };
 
   return (
@@ -53,7 +56,7 @@ export default function BookCallout() {
           <p className="text-gray-300 mb-4 text-base md:text-lg">
             Request an engineer visit for emergency repairs, maintenance, or diagnostics.
           </p>
-          <div className="text-brand-red font-semibold flex items-center justify-center gap-2 text-lg md:text-xl">
+          <div className="text-brand-red font-semibold flex items-center justify-center gap-2 text-lg md:text-xl bg-red-500/10 p-3 rounded-lg inline-block border border-brand-red/20">
             <Phone size={20} /> Emergency? Call 031 505 0898
           </div>
         </div>
@@ -63,11 +66,25 @@ export default function BookCallout() {
         <div className="container-narrow max-w-3xl">
           <div className="bg-white rounded-lg shadow-sm p-5 sm:p-6 md:p-8">
             {submitted ? (
-              <div className="text-center py-16">
+              <div className="text-center py-12">
                 <div className="text-brand-red font-display text-3xl mb-4">CALLOUT REQUESTED</div>
-                <p className="text-gray-600">
-                  We'll contact you shortly to confirm your booking.
+                <p className="text-gray-600 text-lg mb-6">
+                  Your email app should have opened with your callout details. Please click <strong>"Send"</strong> to complete the request.
                 </p>
+                
+                {/* Emergency Fallback Box */}
+                <div className="bg-red-50 border border-brand-red/20 p-6 rounded-lg inline-block text-left w-full max-w-md mx-auto">
+                  <div className="flex items-center gap-2 text-brand-red font-bold mb-2">
+                    <AlertCircle size={20} />
+                    Is this an emergency?
+                  </div>
+                  <p className="text-sm text-gray-700 mb-4">
+                    If your AC is completely broken or you have an urgent issue, do not wait for an email reply.
+                  </p>
+                  <a href="tel:0315050898" className="btn-primary flex items-center justify-center gap-2 w-full">
+                    <Phone size={18} /> Call 031 505 0898 Now
+                  </a>
+                </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
@@ -162,25 +179,25 @@ export default function BookCallout() {
                   </FormField>
                 </div>
 
-                <label className="flex items-start gap-3 text-sm text-gray-600">
+                <label className="flex items-start gap-3 text-sm text-gray-600 bg-gray-50 p-4 rounded border border-gray-200 cursor-pointer hover:bg-gray-100 transition">
                   <input
                     type="checkbox"
                     checked={agree}
                     onChange={e => setAgree(e.target.checked)}
-                    className="mt-1 w-4 h-4"
+                    className="mt-1 w-5 h-5 accent-brand-red"
                     required
                   />
-                  <span>I agree to being contacted regarding this callout request.</span>
+                  <span className="font-medium">
+                    I agree to being contacted regarding this callout request. <span className="text-brand-red">*</span>
+                  </span>
                 </label>
-
-                {error && <div className="text-brand-red text-sm bg-red-50 p-3 rounded">{error}</div>}
 
                 <button
                   type="submit"
-                  className="btn-primary w-full disabled:opacity-60"
-                  disabled={submitting}
+                  className={`btn-primary w-full ${!agree ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={!agree}
                 >
-                  {submitting ? 'Booking…' : 'Book Callout'}
+                  Book Callout
                 </button>
               </form>
             )}
