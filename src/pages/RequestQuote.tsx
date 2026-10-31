@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Plus, X } from 'lucide-react';
 import FormField from '../components/FormField';
-import { sendQuoteRequest } from '../api/quote';
 
 interface Room {
   id: number;
@@ -25,9 +24,7 @@ export default function RequestQuote() {
   ]);
   const [agree, setAgree] = useState(false);
 
-  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const addRoom = () => {
     setRooms(prev => [...prev, { id: Date.now(), size: '', type: 'Bedroom', notes: '' }]);
@@ -41,36 +38,52 @@ export default function RequestQuote() {
     setRooms(prev => prev.map(r => (r.id === id ? { ...r, ...patch } : r)));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!agree || submitting) return;
-
-    setSubmitting(true);
-    setError(null);
-
-    try {
-      await sendQuoteRequest({
-        fullName,
-        email,
-        phone,
-        preferredContactMethod,
-        urgencyLevel,
-        serviceType,
-        preferredDate,
-        additionalInformation,
-        rooms: rooms.map(r => ({
-          size: r.size,
-          type: r.type,
-          notes: r.notes,
-        })),
-      });
-      setSubmitted(true);
-    } catch (err) {
-      console.error(err);
-      setError('Could not submit your quote request. Is the backend running?');
-    } finally {
-      setSubmitting(false);
+    
+    // Double-check the checkbox logic (HTML 'required' handles this natively, but we enforce it here just in case)
+    if (!agree) {
+      alert("Please agree to being contacted regarding your inquiry.");
+      return;
     }
+
+    // 1. Build the room details string
+    let roomDetails = '';
+    rooms.forEach((room, index) => {
+      roomDetails += `Room ${index + 1}:\n`;
+      roomDetails += `- Size: ${room.size} m²\n`;
+      roomDetails += `- Type: ${room.type}\n`;
+      if (room.notes) roomDetails += `- Notes: ${room.notes}\n`;
+      roomDetails += `\n`;
+    });
+
+    // 2. Build the full email body
+    const emailBody = `
+NEW QUOTE REQUEST
+-----------------------------
+CUSTOMER DETAILS:
+Name: ${fullName}
+Email: ${email}
+Phone: ${phone}
+Preferred Contact: ${preferredContactMethod}
+Urgency: ${urgencyLevel}
+Service Type: ${serviceType}
+Preferred Date: ${preferredDate || 'Not specified'}
+
+ROOM DETAILS:
+${roomDetails}
+ADDITIONAL INFORMATION:
+${additionalInformation || 'None provided'}
+    `.trim();
+
+    // 3. Create the mailto link
+    const mailtoLink = `mailto:advancedair@absamail.co.za?subject=Quote Request from ${fullName}&body=${encodeURIComponent(emailBody)}`;
+
+    // 4. Open the user's email client
+    window.location.href = mailtoLink;
+
+    // 5. Show the success screen
+    setSubmitted(true);
   };
 
   return (
@@ -90,8 +103,11 @@ export default function RequestQuote() {
             {submitted ? (
               <div className="text-center py-16">
                 <div className="text-brand-red font-display text-3xl mb-4">QUOTE REQUESTED</div>
-                <p className="text-gray-600">
-                  Thank you. Our team will prepare your quote and get back to you shortly.
+                <p className="text-gray-600 mb-4">
+                  Your email app should have opened with your request details. Please hit "Send" in your email app to complete the process.
+                </p>
+                <p className="text-sm text-gray-500">
+                  If your email app didn't open, please call us directly on 031 505 0898.
                 </p>
               </div>
             ) : (
@@ -203,6 +219,7 @@ export default function RequestQuote() {
                             <input
                               required
                               type="number"
+                              min="1"
                               placeholder="e.g. 25"
                               value={room.size}
                               onChange={e => updateRoom(room.id, { size: e.target.value })}
@@ -266,25 +283,22 @@ export default function RequestQuote() {
                   </FormField>
                 </div>
 
-                <label className="flex items-start gap-3 text-sm text-gray-600">
+                <label className="flex items-start gap-3 text-sm text-gray-600 bg-gray-50 p-4 rounded-lg border border-gray-200 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={agree}
                     onChange={e => setAgree(e.target.checked)}
-                    className="mt-1 w-4 h-4"
+                    className="mt-1 w-5 h-5 accent-brand-red cursor-pointer"
                     required
                   />
-                  <span>I agree to being contacted regarding my inquiry.</span>
+                  <span className="select-none">I agree to being contacted regarding my inquiry. <span className="text-brand-red">*</span></span>
                 </label>
-
-                {error && <div className="text-brand-red text-sm bg-red-50 p-3 rounded">{error}</div>}
 
                 <button
                   type="submit"
-                  className="btn-primary w-full disabled:opacity-60"
-                  disabled={submitting}
+                  className="btn-primary w-full text-lg shadow-lg hover:shadow-xl transition-all"
                 >
-                  {submitting ? 'Submitting…' : 'Submit Quote Request'}
+                  Submit Quote Request
                 </button>
               </form>
             )}
